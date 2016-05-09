@@ -534,22 +534,28 @@
         if ((target.tagName.toLowerCase()) == "a") {
             switch (target.parentNode.id) {
                 case "everyTimeTip1":
-                    oInput[0].value = tempText
+                    oInput[0].value = tempText;
+                    oInput[0].focus();
                     break;
                 case "everyTimeTip2":
                     oInput[1].value = tempText
+                    oInput[1].focus();
                     break;
                 case "everyTimeTip3":
                     oInput[2].value = tempText
+                    oInput[2].focus();
                     break;
                 case "everyTimeTip4":
                     oInput[3].value = tempText
+                    oInput[3].focus();
                     break;
                 case "everyTimeTip5":
                     oInput[4].value = tempText
+                    oInput[4].focus();
                     break;
                 case "everyTimeTip6":
                     oInput[5].value = tempText
+                    oInput[5].focus();
                     break;
                 default :
                     false;
@@ -647,11 +653,41 @@
     oInput[1].onblur = function (event) {
         event = event || window.event;
         var target = event.target || event.srcElement;
+        var year = oInput[0].value;
+        var day = oInput[2].value;
         if (target.value > 12) {
             target.value = 12;
         }
         if (target.value < 1) {
             target.value = 1;
+        }
+        if((year % 400 == 0) || (year % 4 == 0) && (year % 100 != 0)){
+            if(target.value==2){
+                if(day>28){
+                    oInput[2].value = 28;
+                }
+            }
+            if(/^[2469(11)]$/.test(target.value)){
+                if(day>30){
+                    oInput[2].value = 30;
+                }
+            }
+        }else{
+            if(target.value==2){
+                if(day>29){
+                    oInput[2].value = 29;
+                }
+            }
+            if(/^[2469(11)]$/.test(target.value)){
+                if(day>30){
+                    oInput[2].value = 30;
+                }
+            }
+            else {
+                if (day>=31) {
+                    target.value = 31;
+                }
+            }
         }
     }
     //month 回车事件
@@ -659,6 +695,8 @@
         event = event || window.event;
         var target = event.target || event.srcElement;
         var keycode = event.keyCode;
+        var year = oInput[0].value;
+        var day = oInput[2].value;
         if (keycode == 13) {
             if (target.value > 12) {
                 target.value = 12;
@@ -668,9 +706,44 @@
                 target.value = 1;
                 monthDiv.style.display = "none";
             }
+
             else {
                 monthDiv.style.display = "none";
             }
+            if((year % 400 == 0) || (year % 4 == 0) && (year % 100 != 0)){
+                if(target.value==2){
+                    if(day>28){
+                        oInput[2].value = 28;
+                    }
+                }
+                if(/^[2469(11)]$/.test(target.value)){
+                    if(day>30){
+                        oInput[2].value = 30;
+                    }
+                }
+                else {
+                    if (day>=31) {
+                        target.value = 31;
+                    }
+                }
+            }else{
+                if(target.value==2){
+                    if(day>29){
+                        oInput[2].value = 29;
+                    }
+                }
+                if(/^[2469(11)]$/.test(target.value)){
+                    if(day>30){
+                        oInput[2].value = 30;
+                    }
+                }
+                else {
+                    if (day>=31) {
+                        target.value = 31;
+                    }
+                }
+            }
+
 
         }
     }
@@ -848,6 +921,7 @@
         if (rtText1.value === "") {
             return alert("请出入备忘录名称")
         }
+
        var Msg1= getMsg1();
         var Msg2= getMsg2();
         var MsgName=Msg2.name, MsgDetail=Msg2.detail;
