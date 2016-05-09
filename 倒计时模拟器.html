@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>☆倒计时模拟器★</title>
+    <style type="text/css">
+        /*外部盒子*/
+        /*html{    display: block;}*/
+        body div ul li span select {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #out {
+            width: 1000px;
+            height: 250px;
+            border: 1px dashed grey;
+            margin: 10px auto;
+            background-color: #CCC;
+            padding: 0;
+        }
+
+        #out .in-left {
+            height: 226px;
+            margin-top: 2px;
+            float: left;
+            margin-left: 10px;
+            width: 475px;
+            /*background-color: slateblue;*/
+            padding: 0
+        }
+
+        #out .in-right {
+            height: 226px;
+            margin-top: 2px;
+            float: right;
+            margin-right: 10px;
+            width: 475px;
+            /*background-color: slateblue;*/
+        }
+
+        /*标题*/
+        h3 {
+            color: white;
+            height: 20px;
+            line-height: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #486582;
+            border-radius: 10%;
+            box-shadow: 1px 1px grey
+        }
+
+        /*左内盒子*/
+        .in-left ul li {
+            list-style: none;
+        }
+
+        .in-left ul {
+            width: 455px;
+            height: 175px;
+            margin-left: 10px;
+            padding: 0;
+            text-align: center
+        }
+
+        .in-left ul li {
+            height: 50px;
+            width: 100%;
+            /*background-color: yellow;*/
+            margin-bottom: 5px;
+        }
+
+        .in-left > ul > li > input {
+            display: inline-block;
+            width: 100px;
+            margin-top: 10px;
+            text-align: center;
+            box-shadow: 2px 2px grey;
+        }
+
+        /*左内盒子-滑动选择盒子*/
+        .in-left {
+            position: relative;
+        }
+
+        #everyTime .select1 {
+            width: 380px;
+            position: absolute;
+            left: 35px;
+            top: 50px;
+            height: auto;
+            background-color: white;
+            display: none;
+            padding-left: 5px;
+            padding-bottom: 4px;
+            border: 1px solid slateblue;
+            z-index: 21;
+
+        }
+
+        #everyTime .select2 {
+            width: 380px;
+            position: absolute;
+            left: 35px;
+            top: 104px;
+            height: auto;
+            background-color: white;
+            display: none;
+            padding-left: 5px;
+            padding-bottom: 4px;
+            border: 1px solid slateblue;
+            z-index: 21;
+        }
+
+        #everyTime div a {
+            display: inline-block;
+            width: 50px;
+            height: 15px;
+            background-color: #6086AD;
+            margin-right: 4px;
+            margin-top: 3px;
+            text-decoration: none;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            -webkit-user-select: none;
+        }
+
+        #everyTime div a:hover {
+            background-color: #486582;
+        }
+
+        /*右内盒子*/
+        .in-right ul li {
+            list-style: none;
+        }
+
+        .in-right ul {
+            width: 455px;
+            height: 175px;
+            margin-left: 10px;
+            padding: 0;
+            padding: 0;
+        }
+
+        .in-right ul li:first-child {
+            width: 440px;
+            margin-left: 20px;
+            /*background-color: yellow;*/
+            height: 70px;
+            line-height: 100%;
+            text-align: center;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .in-right ul li:last-child {
+            width: 440px;
+            margin-left: 20px;
+            /*background-color: red;*/
+            height: 100px;
+            text-align: center;
+        }
+
+        .in-right ul label {
+            float: left;
+            margin-top: 3px;
+            margin-left: 5px;
+        }
+
+        .in-right ul .right_li1 > input {
+            width: 300px;
+            height: 30px;
+        }
+
+        .in-right ul .right_li2 > textarea {
+            width: 300px;
+            height: 60px;
+        }
+
+        /*添加div 底部盒子*/
+        #bottom {
+            margin: 10px auto;
+            width: 1000px;
+            background-color: gainsboro;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #bh3 {
+            width: 100%;
+            height: 20px;
+            background-color: #D7DADB;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*记事本div*/
+        .nodpad {
+            float: left;
+            width: 90%;
+            height: 100px;
+            background-color: beige;
+            margin-bottom: 10px;
+            box-shadow: 2px 2px 2px;
+            margin-left: 50px;
+            position: relative;
+            overflow: hidden;
+            color: whitesmoke;
+        }
+
+       .nodpad .btDiv2 {
+            background-color: #23AEBB;
+            float: left;
+            width: 80px;
+            height: 90px;
+            margin-left: 4px;
+            margin-top: 4px;
+            overflow: hidden;
+           color: whitesmoke;
+
+        }
+
+        .nodpad .btH2 {
+            padding: 10px;
+            text-indent: 25px;
+            text-align: left;
+            width: 810px;
+            height: 20px;
+            line-height: 20px;
+            background-color: greenyellow;
+            padding: 0;
+            margin-top: 4px;
+            margin-left: 86px;
+            margin-bottom: 4px;
+            font-size: 12px;
+            color: black;
+        }
+
+        .nodpad .btp {
+            padding: 10px;
+            text-indent: 30px;
+            text-align: left;
+            width: 786px;
+            padding: 12px;
+            line-height: 22px;
+            height: 41px;
+            overflow: hidden;
+            margin-top: 0;
+            margin-left: 86px;
+            background-color: #3276b1;
+            font-size: 15px;
+
+
+        }
+
+        .nodpad .closeSpan {
+            position: absolute;
+            right: 9px;
+            top: 3px;
+            width: 20px;
+            height: 20px;
+            background: url("http://www.365djs.com/images/icons.png?v1382762112227") no-repeat -126px 3px;
+            cursor: pointer;
+
+        }
+
+        .nodpad .btlfDiv {
+            width: 70px;
+            height: 80px;
+            margin-left: 4px;
+            margin-top: 5px;
+            background-color: #23AEBB;
+            line-height: 20px;
+            font-size: 12px;
+            color: whitesmoke;
+        }
+        .nodpad .midSpan{
+            text-align: center;
+            top:25%;
+            width: 100%;
+            font-size: 20px;
+            font-weight: 900;
+            height: 40%;
+           padding-top: 4px;
+            background-color:#23AEBB;
+            color: whitesmoke;
+        }
+
+    </style>
+</head>
+<body>
+<div class="out" id="out">
+    <h3>计时器</h3>
+    <div class="in-left" id="in-left">
+        <ul>
+            <li>
+                <input type="text" value="2016"/>
+                <span>年</span>
+                <input type="text" value="6"/>
+                <span>月</span>
+                <input type="text" value="6"/>
+                <span>日</span>
+            </li>
+            <li>
+                <input type="text" value="13"/>
+                <span>时</span>
+                <input type="text" value="2"/>
+                <span>分</span>
+                <input type="text" value="59"/>
+                <span>秒</span>
+            </li>
+            <li>
+                <input id="btn" type="button" value="添加倒计时"
+                       style="background-color:#3276b1;color: white;width: 150px;height: 30px;font-size: 20px;box-shadow: none;cursor: pointer;">
+            </li>
+        </ul>
+        <div class="everyTime select1" id="everyTime">
+
+        </div>
+    </div>
+    <div class="in-right" id="in-right">
+        <ul>
+            <li class="right_li1">
+                <label>名称：</label>
+                <input id="text1" type="text"/>
+            </li>
+            <li class="right_li2">
+                <label>内容：</label>
+                <textarea name="" id="text2" cols="30" rows="10"></textarea>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="bottom" id="bottom">
+    <h2 id="bh3"></h2>
+
+</div>
+<!--标题闪烁code-->
+<script type="text/javascript">
+    //title JS
+    var flag = 0
+    function time() {
+        switch (flag) {
+            case 0:
+                document.title = "☆倒计时★";
+                flag = 1;
+                break;
+            case 1:
+                document.title = "★倒计时☆"
+                flag = 0;
+                break;
+            default :
+                false;
+        }
+        setTimeout("time()", 500)
+    }
+    time()
+    utilsEvent = {
+        addHandler: function (element, type, handler) {
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + type, handler);
+            } else {
+                element["on" + type] = handler;
+            }
+        },
+        getEvent: function (event) {
+            return event ? event : window.event;
+        }
+    }
+    //正文
+</script>
+<!--动态绑定div，a元素code-->
+<script type="text/javascript">
+    var oLeftDiv = document.getElementById("in-left");
+    var oInput = oLeftDiv.getElementsByTagName("input");//li下面所有的input标签
+    var oTime = document.getElementById("everyTime");//滑动的盒子
+    var module = oTime.getElementsByTagName("a");//滑动盒子里面的a小模块
+
+    //在选择div里创建几个width100%的div，当做选项卡.后期可以通过设置选项卡的display：none方式来展示；
+    function creatDiv() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 6; i++) {
+            var TipDiv = document.createElement("div");
+            var count = i + 1;
+            TipDiv.id = "everyTimeTip" + count;
+            //留出高度设置，让他自适应。
+            ofragment.appendChild(TipDiv)
+        }
+        oTime.appendChild(ofragment);
+    }
+    creatDiv();
+
+    // 对input标签中的年进行循环添加 小模块；放到上面的 year div中。
+    var yearDiv = document.getElementById("everyTimeTip1");
+    function yearList() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 85; i++) {
+            var a_module = document.createElement("a");
+            var text = 2016 + i; //动态绑定文本数据
+            a_module.text = text;
+            a_module.href = "javascipt:;"
+            ofragment.appendChild(a_module);
+        }
+        yearDiv.appendChild(ofragment);
+        yearDiv.className = "#everyTime select1";
+        yearDiv.style.display = "none";
+    }
+    yearList();
+    //  对月份进行 a小模块的绑定，并添加到monthDiv中；
+    var monthDiv = document.getElementById("everyTimeTip2");
+    function monthList() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 12; i++) {
+            var a_module = document.createElement("a");
+            var text = 1 + i; //动态绑定文本数据
+            a_module.text = text;
+            a_module.href = "javascipt:;"
+            ofragment.appendChild(a_module);
+        }
+        monthDiv.appendChild(ofragment);
+        monthDiv.className = "#everyTime select1";
+        monthDiv.style.display = "none";
+    }
+    monthList();
+    // 日期
+    var dayDiv = document.getElementById("everyTimeTip3");
+    function dayList() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 31; i++) {
+            var a_module = document.createElement("a");
+            var text = 1 + i; //动态绑定文本数据
+            a_module.text = text;
+            a_module.href = "javascipt:;"
+            ofragment.appendChild(a_module);
+        }
+        dayDiv.appendChild(ofragment);
+        dayDiv.className = "#everyTime select1";
+        dayDiv.style.display = "none";
+    }
+    dayList();
+    //小时
+    var hourDiv = document.getElementById("everyTimeTip4");
+    function hourList() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 24; i++) {
+            var a_module = document.createElement("a");
+            var text = i; //动态绑定文本数据
+            a_module.text = text;
+            a_module.href = "javascipt:;"
+            ofragment.appendChild(a_module);
+        }
+        hourDiv.appendChild(ofragment);
+        hourDiv.className = "#everyTime select2";
+        hourDiv.style.display = "none";
+    }
+    hourList();
+    //分
+    var minDiv = document.getElementById("everyTimeTip5");
+    function minList() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 60; i++) {
+            var a_module = document.createElement("a");
+            var text = i; //动态绑定文本数据
+            a_module.text = text;
+            a_module.href = "javascipt:;"
+            ofragment.appendChild(a_module);
+        }
+        minDiv.appendChild(ofragment);
+        minDiv.className = "#everyTime select2";
+        minDiv.style.display = "none";
+    }
+    minList();
+    //秒
+    var secDiv = document.getElementById("everyTimeTip6");
+    function secList() {
+        var ofragment = document.createDocumentFragment();
+        for (var i = 0; i < 60; i++) {
+            var a_module = document.createElement("a");
+            var text = i; //动态绑定文本数据
+            a_module.text = text;
+            a_module.href = "javascipt:;"
+            ofragment.appendChild(a_module);
+        }
+        secDiv.appendChild(ofragment);
+        secDiv.className = "#everyTime select2";
+        secDiv.style.display = "none";
+    }
+    secList();
+
+
+</script>
+<!--点击 获得焦点 弹出选择盒子-->
+<script type="text/javascript">
+    utilsEvent.addHandler(oLeftDiv, "click", function (event) {
+        event = utilsEvent.getEvent(event);
+        var target = event.target || event.srcElement;
+        switch (target) {
+            case oInput[0]:
+                yearDiv.style.display = "block";
+                break;
+            case oInput[1]:
+                monthDiv.style.display = "block";
+                break;
+            case oInput[2]:
+                dayDiv.style.display = "block";
+                break;
+            case oInput[3]:
+                hourDiv.style.display = "block";
+                break;
+            case oInput[4]:
+                minDiv.style.display = "block";
+                break;
+            case oInput[5]:
+                secDiv.style.display = "block";
+            default :
+                false;
+
+        }
+    })
+</script>
+<!--点击填充 消失-->
+<script type="text/javascript">
+    utilsEvent.addHandler(oTime, "click", function (event) {
+        event = utilsEvent.getEvent(event);
+        var target = event.target || event.srcElement;
+        var tempText = target.text;
+        if ((target.tagName.toLowerCase()) == "a") {
+            switch (target.parentNode.id) {
+                case "everyTimeTip1":
+                    oInput[0].value = tempText
+                    break;
+                case "everyTimeTip2":
+                    oInput[1].value = tempText
+                    break;
+                case "everyTimeTip3":
+                    oInput[2].value = tempText
+                    break;
+                case "everyTimeTip4":
+                    oInput[3].value = tempText
+                    break;
+                case "everyTimeTip5":
+                    oInput[4].value = tempText
+                    break;
+                case "everyTimeTip6":
+                    oInput[5].value = tempText
+                    break;
+                default :
+                    false;
+            }
+        }
+    })
+    utilsEvent.addHandler(document, "click", function (event) {
+        event = utilsEvent.getEvent(event)
+        var target = event.target || event.srcElement;
+        if (target !== oInput[0]) {
+            yearDiv.style.display = "none";
+
+        }
+        if (target !== oInput[1]) {
+            monthDiv.style.display = "none";
+        }
+        if (target !== oInput[2]) {
+            dayDiv.style.display = "none";
+
+        }
+        if (target !== oInput[3]) {
+            hourDiv.style.display = "none";
+        }
+        if (target !== oInput[4]) {
+            minDiv.style.display = "none";
+        }
+        if (target !== oInput[5]) {
+            secDiv.style.display = "none";
+        }
+    })
+</script>
+<!--限定条件-->
+<script type="text/javascript">
+    //循环绑定 keydown 事件。
+    for (var i = 0; i < oInput.length - 1; i++) {
+        var temp = i;
+        oInput[i].addEventListener("keydown", function (event) {
+            event = utilsEvent.getEvent(event);
+            var keycode = event.keyCode;
+            if (keycode >= 48 && keycode <= 57 || keycode == 13 || keycode == 8 || keycode >= 96 && keycode <= 105) {
+                event.returnValue = true;
+            }
+            else {
+                event.preventDefault(event);
+            }
+
+        }, false)
+    }
+    //        utilsEvent.addHandler(oInput[0],"keydown",function(event){
+    //                    event=utilsEvent.getEvent(event);
+    //                    var keycode=event.keyCode;
+    //                    if(keycode >= 48 && keycode <= 57||keycode==13||keycode==8){
+    //                        event.returnValue=true;
+    //                    }
+    //                    else {
+    //                        event.preventDefault(event);
+    //                    }
+    //                }
+    //        )
+
+
+    // 文本框 year
+    oInput[0].onblur = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if (target.value > 2100) {
+            target.value = 2100;
+        }
+        if (target.value < 2016) {
+            target.value = 2016;
+        }
+
+    }
+    //回车事件
+    oInput[0].onkeydown = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var keycode = event.keyCode;
+        if (keycode == 13) {
+            if (target.value > 2100) {
+                target.value = 2100;
+                yearDiv.style.display = "none";
+            }
+            if (target.value < 2016) {
+                target.value = 2016;
+                yearDiv.style.display = "none";
+            }
+        } else {
+            yearDiv.style.display = "none";
+        }
+
+    };
+
+    // 文本框 month
+    oInput[1].onblur = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if (target.value > 12) {
+            target.value = 12;
+        }
+        if (target.value < 1) {
+            target.value = 1;
+        }
+    }
+    //month 回车事件
+    oInput[1].onkeydown = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var keycode = event.keyCode;
+        if (keycode == 13) {
+            if (target.value > 12) {
+                target.value = 12;
+                monthDiv.style.display = "none";
+            }
+            if (target.value < 1) {
+                target.value = 1;
+                monthDiv.style.display = "none";
+            }
+            else {
+                monthDiv.style.display = "none";
+            }
+
+        }
+    }
+    // 文本框 day
+    oInput[2].onblur = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var year = oInput[0].value;
+        var montha = oInput[1].value;
+        if ((year % 400 == 0) || (year % 4 == 0) && (year % 100 != 0)) {
+            if (montha == 2) {
+                if (target.value > 28) {
+                    target.value = 28;
+
+                }
+            }
+            else if (/^[13578(10)(12)]$/.test(montha)) {
+                if (target.value > 31)
+                    target.value = 31;
+            }
+            else {
+                if (target.value > 30) {
+                    target.value = 30;
+                }
+            }
+        }
+        else {
+            if (montha == 2) {
+                if (target.value > 29) {
+                    target.value = 29;
+                }
+            }
+            else if (/^[13578(10)(12)]$/.test(montha)) {
+                target.value = 31;
+            }
+            else {
+                target.value = 30;
+            }
+        }
+    }
+    //day 回车事件
+    oInput[2].onkeydown = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var keycode = event.keyCode;
+        if (keycode == 13) {
+            var year = oInput[0].value;
+            var montha = oInput[1].value;
+            if ((year % 400 == 0) || (year % 4 == 0) && (year % 100 != 0)) {
+                if (montha == 2) {
+                    if (target.value > 28) {
+                        target.value = 28;
+                        dayDiv.style.display = "none";
+                    }
+                }
+                else if (/^[13578(10)(12)]$/.test(montha)) {
+                    if (target.value > 30) {
+                        target.value = 30;
+                        dayDiv.style.display = "none";
+                    }
+                }
+                else {
+                    dayDiv.style.display = "none";
+                }
+            }
+            else {
+                if (montha == 2) {
+                    if (target.value > 29) {
+                        target.value = 29;
+                        dayDiv.style.display = "none";
+                    }
+                }
+                else if (/^[13578(10)(12)]$/.test(montha)) {
+                    if (target.value > 31) {
+                        target.value = 31;
+                        dayDiv.style.display = "none";
+                    }
+
+                }
+                else {
+                    dayDiv.style.display = "none";
+                }
+            }
+            dayDiv.style.display = "none";
+        }
+    }
+    // 文本框 hour
+    oInput[3].onblur = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if (target.value > 23) {
+            target.value = 23;
+        }
+        if (target.value < 0) {
+            target.value = 0;
+        }
+    }
+    //hour回车事件
+    oInput[3].onkeydown = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var keycode = event.keyCode;
+        if (keycode == 13) {
+            if (target.value > 23) {
+                target.value = 23;
+            }
+            if (target.value < 0) {
+                target.value = 0;
+            }
+        }
+    }
+    // 文本框 min
+    oInput[4].onblur = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if (target.value > 59) {
+            target.value = 59;
+        }
+        if (target.value < 0) {
+            target.value = 0;
+        }
+    }
+    // min回车事件
+    oInput[4].onkeydown = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var keycode = event.keyCode;
+        if (keycode == 13) {
+            if (target.value > 59) {
+                target.value = 59;
+            }
+            if (target.value < 0) {
+                target.value = 0;
+            }
+        }
+    }
+    // 文本框 sec
+    oInput[5].onblur = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if (target.value > 59) {
+            target.value = 59;
+        }
+        if (target.value < 0) {
+            target.value = 0;
+        }
+    }
+    //sec 回车
+    oInput[5].onkeydown = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        var keycode = event.keyCode;
+        if (keycode == 13) {
+            if (target.value > 59) {
+                target.value = 59;
+            }
+            if (target.value < 0) {
+                target.value = 0;
+            }
+        }
+    }
+</script>
+<!--提交创建记事本div-->
+<!--1 对右边盒子进行内容 操作。-->
+<script type="text/javascript">
+    rtText1 = document.getElementById("text1");
+    rtText2 = document.getElementById("text2");
+    var btn = document.getElementById("btn");
+    var botmDiv = document.getElementById("bottom");
+   var tipFlag=0;
+
+    utilsEvent.addHandler(btn, "click", function (event) {
+        event = utilsEvent.getEvent(event);
+        var target = event.target || event.srcElement;
+        if (rtText1.value === "") {
+            return alert("请出入备忘录名称")
+        }
+       var Msg1= getMsg1();
+        var Msg2= getMsg2();
+        var MsgName=Msg2.name, MsgDetail=Msg2.detail;
+        var timerDown= countDown(Msg1)
+        if(tipFlag<11){
+            createDetail(Msg1,MsgName,MsgDetail,timerDown);
+        }
+        if(botmDiv.childNodes.length>=13){
+            alert("为了方便管理时间备忘录，最多可创建个数10；如有需求请删除其他备忘录")
+        }
+
+
+    })
+    //写一个方法，动态生成详细模块
+    function createDetail(Msg1,MsgName,MsgDetail,timerDown){
+        //动态生成 记事本详细窗口
+        //外div
+        //////////////////////////////////////////
+        var targetT="";
+        targetT+=Msg1.text0+"-"+Msg1.text1+"-"+Msg1.text2+"-"+Msg1.text3+":"+Msg1.text4+":"+Msg1.text5;
+        var todayT=new Date;
+        var timeGap= Date.parse(targetT)-Date.parse(todayT);
+        //////////////////////////////////////////
+
+     tipFlag+=1
+        if(tipFlag>=10){
+            tipFlag=0;
+        }
+        if(botmDiv.childNodes.length==3){
+            tipFlag=0;
+        }
+    if((botmDiv.childNodes.length<13)&&(timeGap>0)){ var btDiv = document.createElement("div");
+        btDiv.className = "nodpad";
+        botmDiv.appendChild(btDiv);
+        //生成左div btdiv2
+        var btDiv2 = document.createElement("div");
+        btDiv2.className = "btDiv2";
+        btDiv.appendChild(btDiv2);
+
+        //生成标题
+        var bth2 = document.createElement("h2");
+        bth2.className = "btH2";
+        btDiv.appendChild(bth2);
+        bth2.innerHTML="<span>"+tipFlag+"</span>"+"\r"+"."+MsgName+" "+"<span>"+"距离目标日期还剩"+"</span>"+(":"+timerDown);
+        bth2.querySelector("span").style.color="blue";
+        bth2.querySelectorAll("span")[1].style.color="red";
+        bth2.querySelectorAll("span")[1].style.paddingLeft="40px";
+        bth2.querySelectorAll("span")[1].style.paddingRight="20px";
+        var btp = document.createElement("p");
+        btp.className = "btp";
+        btDiv.appendChild(btp);
+        btp.innerHTML=MsgDetail;//这是p标签 只能使用innerhtml改变其文本内容；
+
+        var closeSpan = document.createElement("span");
+        closeSpan.className = "closeSpan";
+        btDiv.appendChild(closeSpan);
+        var lfDiv = document.createElement("div");
+        lfDiv.className = "btlfDiv";
+        btDiv2.appendChild(lfDiv);
+        var midSpan = document.createElement("div");
+        midSpan.className = "midSpan";
+        lfDiv.appendChild(midSpan);
+        //动态生成 记事本详细窗口
+        var lfDivText=document.createTextNode("123123");
+        lfDiv.insertBefore(lfDivText,lfDiv.firstChild);
+        var anotherText=document.createTextNode("2323");
+        lfDiv.appendChild(anotherText);
+        lfDivText.nodeValue=Msg1.text0+"年"+addZero(Msg1.text1)+"月";
+        midSpan.innerHTML=addZero(Msg1.text2);
+        anotherText.nodeValue=addZero(Msg1.text3)+":"+addZero(Msg1.text4)+":"+addZero(Msg1.text5);
+        window.setInterval(function(){
+            var timespan=bth2.querySelectorAll("Span")[1].nextSibling;
+            timespan.nodeValue=countDown(Msg1);
+
+        },1000);}
+
+    }
+    //动态获取文本框信息
+    function addZero(value){
+        return value < 10 ? "0"+ value : value;
+    }
+    function getMsg1(){
+      var Msg=new Object();
+        for(var i= 0,len=oInput.length-1;i<len;i++){
+            Msg["text"+i]=oInput[i].value;
+        }
+        return Msg
+    }
+    function getMsg2(name,detail){
+        var Msg=new Object();
+        Msg.name= rtText1.value;
+        Msg.detail= rtText2.value;
+        return Msg
+    }
+   //动态计算倒计时；
+    function countDown(Msg1){
+        var str="";
+        var targetT="";
+        targetT+=Msg1.text0+"-"+Msg1.text1+"-"+Msg1.text2+"-"+Msg1.text3+":"+Msg1.text4+":"+Msg1.text5;
+        var todayT=new Date;
+         var timeGap= Date.parse(targetT)-Date.parse(todayT);
+        if(timeGap>0){ yearG=Math.floor(timeGap/(1000*60*60*24*365));
+            timeGap=timeGap-yearG*(1000*60*60*24*365);
+//            console.log("timeGapy"+":"+timeGap);
+            monthG=Math.floor(timeGap/(1000*60*60*24*30));
+//            console.log(monthG);
+            timeGap=timeGap-monthG*(1000*60*60*24*30);
+//            console.log("timeGapm"+":"+timeGap);
+            dayG=Math.floor(timeGap/(1000*60*60*24));
+//            console.log(dayG);
+            timeGap=timeGap-dayG*(1000*60*60*24);
+//            console.log("timeGapd"+":"+timeGap);
+            hourG=Math.floor(timeGap/(1000*60*60));
+//            console.log(hourG);
+            timeGap=timeGap-hourG*(1000*60*60);
+//            console.log("timeGaph"+":"+timeGap);
+            minG=Math.floor(timeGap/(1000*60));
+//            console.log(minG);
+            timeGap=timeGap-minG*(1000*60);
+//            console.log("timeGapm"+":"+timeGap);
+            secG=Math.floor(timeGap/(1000));
+//            console.log(secG);
+            timeGap=timeGap-secG*(1000);
+//            console.log("timeGaps"+":"+timeGap);
+            str+=yearG+"年"+monthG+"月"+dayG+"天"+hourG+"小时"+minG+"分钟"+secG+"秒";
+
+        }
+        else if(timeGap<=0){
+            alert("您选择的日期已过期")
+        }
+
+//        console.log("ladhsflajs"+str);
+        return str;
+
+    }
+//    删除详细框
+    utilsEvent.addHandler(botmDiv, "click", function (event) {
+        event=event||window.event;
+        var target=event.target||event.srcElement;
+      console.log(target);
+        if(target.className ==="closeSpan"){
+            console.log(target.parentNode);
+            target.parentNode.parentNode.removeChild(target.parentNode);
+        }
+    })
+
+</script>
+
+</body>
+
+</html>
